@@ -22,14 +22,20 @@
         "web3": "^1.6.0"
     },
     "devDependencies": {
+        "@nomiclabs/hardhat-ethers": "^2.0.2",
+        "@nomiclabs/hardhat-waffle": "^2.0.1",
         "@types/node": "^16.10.3",
         "@types/react": "^17.0.27",
         "@typescript-eslint/eslint-plugin": "^4.23.0",
         "@typescript-eslint/parser": "^4.23.0",
+        "chai": "^4.3.4",
         "eslint": "^7.26.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^3.4.0",
         "eslint-plugin-react": "^7.23.2",
+        "ethereum-waffle": "^3.4.0",
+        "ethers": "^5.4.7",
+        "hardhat": "^2.6.5",
         "prettier": "^2.3.0",
         "typescript": "^4.4.3"
     }
