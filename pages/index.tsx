@@ -1,9 +1,9 @@
 import { ethers } from 'ethers';
 import { NextPage } from 'next';
 import { useState } from 'react';
-// import Token from './artifacts/contracts/Token.sol/Token.json';
 import { Button, Form } from 'react-bootstrap';
 import Greeter from '../artifacts/contracts/Greeter.sol/Greeter.json';
+import Token from '../artifacts/contracts/Token.sol/Token.json';
 
 declare global {
     interface Window {
@@ -12,12 +12,33 @@ declare global {
 }
 
 const greeterAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3';
+const tokenAddress = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9';
 
 const HomePage: NextPage = () => {
     const [greeting, setGreetingValue] = useState('');
+    const [userAccount, setUserAccount] = useState('');
+    const [amount, setAmount] = useState(0);
+    const [balance, setBalance] = useState(-1);
 
     const requestAccount = async () => {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
+    };
+
+    const getBalance = async () => {
+        if (typeof window.ethereum !== 'undefined') {
+            const [account] = await window.ethereum.request({
+                method: 'eth_requestAccounts',
+            });
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const contract = new ethers.Contract(
+                tokenAddress,
+                Token.abi,
+                provider
+            );
+            const balance = await contract.balanceOf(account);
+            console.log('Balance: ', balance.toString());
+            setBalance(balance);
+        }
     };
 
     const fetchGreeting = async () => {
@@ -57,17 +78,69 @@ const HomePage: NextPage = () => {
         }
     };
 
+    const transferCoin = async () => {
+        if (typeof window.ethereum !== 'undefined') {
+            await requestAccount();
+            const provider = new ethers.providers.Web3Provider(window.ethereum);
+            const signer = provider.getSigner();
+            const contract = new ethers.Contract(
+                tokenAddress,
+                Token.abi,
+                signer
+            );
+            const transaction = await contract.transfer(userAccount, amount);
+            await transaction.wait();
+            console.log(`${amount} Coins successfully sent to ${userAccount}`);
+            getBalance();
+        }
+    };
+
     return (
-        <div className="container">
-            <h1>Home Page</h1>
-            <Button onClick={fetchGreeting}>Fetch Greeting</Button>
+        <div className="container d-grid gap-3">
+            <h1 className="text-center">DAPP Demo</h1>
+            <Button className="p-2 border" onClick={fetchGreeting}>
+                Fetch Greeting
+            </Button>
             <Form.Control
+                className="p-2 border"
                 type="text"
                 placeholder="Set Greetings"
                 onChange={(e) => setGreetingValue(e.target.value)}
                 value={greeting}
             />
-            <Button onClick={setGreeting}>Set Greeting</Button>
+            <Button className="p-2 border" onClick={setGreeting}>
+                Set Greeting
+            </Button>
+
+            <Button className="p-2 border mt-5" onClick={getBalance}>
+                Get Balance
+            </Button>
+            <Form.Control
+                className="p-2 border"
+                type="text"
+                value={`Current Balance: ${
+                    balance != -1 ? balance : 'Get balance'
+                }`}
+                disabled
+            />
+            <Form.Control
+                className="p-2 border"
+                type="text"
+                placeholder="Account ID"
+                onChange={(e) => setUserAccount(e.target.value)}
+                value={userAccount}
+            />
+            <Form.Control
+                className="p-2 border"
+                type="text"
+                placeholder="Amount"
+                onChange={(e) => setAmount(parseInt(e.target.value))}
+
+                // value={amount}
+            />
+            <Button className="p-2 border" onClick={transferCoin}>
+                Transfer Coins
+            </Button>
         </div>
     );
 };
