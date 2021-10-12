@@ -1,3 +1,4 @@
+require('dotenv').config();
 require('@nomiclabs/hardhat-waffle');
 
 // This is a sample Hardhat task. To learn how to create your own go to
@@ -24,6 +25,10 @@ module.exports = {
     networks: {
         hardhat: {
             chainId: 1337,
+        },
+        ropsten: {
+            url: `https://ropsten.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+            accounts: [`0x${process.env.ACCOUNT_PRIVATE_KEY}`],
         },
     },
 };
