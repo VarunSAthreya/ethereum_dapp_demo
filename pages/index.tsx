@@ -97,29 +97,38 @@ const HomePage: NextPage = () => {
 
     return (
         <div className="container d-grid gap-3">
-            <h1 className="text-center">DAPP Demo</h1>
+            <h1 className="text-center">Ethereum DAPP Demo</h1>
+            <h3>Greeting Contract</h3>
             <Button className="p-2 border" onClick={fetchGreeting}>
                 Fetch Greeting
             </Button>
             <Form.Control
                 className="p-2 border"
                 type="text"
+                value={`Current Greeting: ${
+                    greeting !== '' ? greeting : 'Fetch Greeting'
+                }`}
+                disabled
+            />
+            <Form.Control
+                className="p-2 border"
+                type="text"
                 placeholder="Set Greetings"
                 onChange={(e) => setGreetingValue(e.target.value)}
-                value={greeting}
             />
             <Button className="p-2 border" onClick={setGreeting}>
                 Set Greeting
             </Button>
 
-            <Button className="p-2 border mt-5" onClick={getBalance}>
+            <h3 className="mt-5">Token Contract</h3>
+            <Button className="p-2 border" onClick={getBalance}>
                 Get Balance
             </Button>
             <Form.Control
                 className="p-2 border"
                 type="text"
-                value={`Current Balance: ${
-                    balance != -1 ? balance : 'Get balance'
+                value={`Current Balance(Example Token): ${
+                    balance !== -1 ? balance : 'Get balance'
                 }`}
                 disabled
             />
@@ -135,8 +144,6 @@ const HomePage: NextPage = () => {
                 type="text"
                 placeholder="Amount"
                 onChange={(e) => setAmount(parseInt(e.target.value))}
-
-                // value={amount}
             />
             <Button className="p-2 border" onClick={transferCoin}>
                 Transfer Coins
