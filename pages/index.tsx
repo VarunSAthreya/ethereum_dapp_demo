@@ -11,8 +11,8 @@ declare global {
     }
 }
 
-const greeterAddress = '0x5fbdb2315678afecb367f032d93f642f64180aa3';
-const tokenAddress = '0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9';
+const greeterAddress = process.env.NEXT_PUBLIC_GETTER;
+const tokenAddress = process.env.NEXT_PUBLIC_TOKEN;
 
 const HomePage: NextPage = () => {
     const [greeting, setGreetingValue] = useState('');
