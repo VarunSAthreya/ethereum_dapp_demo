@@ -96,7 +96,7 @@ const HomePage: NextPage = () => {
     };
 
     return (
-        <div className="container d-grid gap-3">
+        <div className="container gap-3 d-grid">
             <h1 className="text-center">Ethereum DAPP Demo</h1>
             <h3>Greeting Contract</h3>
             <Button className="p-2 border" onClick={fetchGreeting}>
