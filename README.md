@@ -16,13 +16,13 @@ Clone the project using the following command:
 _(With github CLI)_
 
 ```sh
-gh repo clone VarunSAthreya/etherum_dapp_demo
+gh repo clone VarunSAthreya/ethereum_dapp_demo
 ```
 
 _(Without CLI)_
 
 ```sh
-git clone https://github.com/VarunSAthreya/etherum_dapp_demo.git
+git clone https://github.com/VarunSAthreya/ethereum_dapp_demo.git
 ```
 
 ### Installing Dependencies
