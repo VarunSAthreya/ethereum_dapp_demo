@@ -11,7 +11,7 @@ declare global {
     }
 }
 
-const greeterAddress = process.env.NEXT_PUBLIC_GETTER;
+const greeterAddress = process.env.NEXT_PUBLIC_GREETER;
 const tokenAddress = process.env.NEXT_PUBLIC_TOKEN;
 
 const HomePage: NextPage = () => {
