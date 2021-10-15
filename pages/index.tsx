@@ -16,6 +16,7 @@ const tokenAddress = process.env.NEXT_PUBLIC_TOKEN;
 
 const HomePage: NextPage = () => {
     const [greeting, setGreetingValue] = useState('');
+    const [updateGreeting, setUpdateGreetingValue] = useState('');
     const [userAccount, setUserAccount] = useState('');
     const [amount, setAmount] = useState(0);
     const [balance, setBalance] = useState(-1);
@@ -60,7 +61,7 @@ const HomePage: NextPage = () => {
     };
 
     const setGreeting = async () => {
-        if (!greeting) return;
+        if (!updateGreeting) return;
 
         if (typeof window.ethereum !== 'undefined') {
             await requestAccount();
@@ -71,8 +72,8 @@ const HomePage: NextPage = () => {
                 Greeter.abi,
                 signer
             );
-            const transaction = await contract.setGreeting(greeting);
-            setGreetingValue('');
+            const transaction = await contract.setGreeting(updateGreeting);
+            setUpdateGreetingValue('');
             await transaction.wait();
             fetchGreeting();
         }
@@ -114,7 +115,7 @@ const HomePage: NextPage = () => {
                 className="p-2 border"
                 type="text"
                 placeholder="Set Greetings"
-                onChange={(e) => setGreetingValue(e.target.value)}
+                onChange={(e) => setUpdateGreetingValue(e.target.value)}
             />
             <Button className="p-2 border" onClick={setGreeting}>
                 Set Greeting
